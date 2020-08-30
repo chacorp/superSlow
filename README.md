@@ -1,2 +1,3 @@
 # superSlow
-replica practice
+replica practice of SuperHot
+just for coding practice
