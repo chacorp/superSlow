@@ -108,6 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 30
+  destroy: 0
+  capMat: {fileID: 2100000, guid: 2f9d69402dc79a7439f34af1d0246b9e, type: 2}
 --- !u!96 &-3472493375248619525
 TrailRenderer:
   serializedVersion: 2

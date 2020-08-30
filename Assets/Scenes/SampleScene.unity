@@ -1051,7 +1051,7 @@ GameObject:
   - component: {fileID: 1459197390}
   - component: {fileID: 1459197389}
   m_Layer: 5
-  m_Name: CrossHair
+  m_Name: AttackCursor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1438,7 +1438,8 @@ MonoBehaviour:
     type: 3}
   firePoint: {fileID: 844171234}
   weaponPoint: {fileID: 554826331}
-  CHC: {fileID: 1975909189}
+  CH_and_ray: {fileID: 1975909188}
+  direction: {x: 0, y: 0, z: 0}
 --- !u!1 &1934372253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1451,6 +1452,7 @@ GameObject:
   - component: {fileID: 1934372258}
   - component: {fileID: 1934372257}
   - component: {fileID: 1934372256}
+  - component: {fileID: 1934372261}
   - component: {fileID: 1934372255}
   - component: {fileID: 1934372254}
   - component: {fileID: 1934372260}
@@ -1501,7 +1503,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.2, y: 1.2, z: 1.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1934372257
 MeshRenderer:
@@ -1580,6 +1582,19 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!65 &1934372261
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934372253}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1975909188
 GameObject:
   m_ObjectHideFlags: 0
@@ -1590,8 +1605,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1975909190}
   - component: {fileID: 1975909189}
+  - component: {fileID: 1975909191}
   m_Layer: 0
-  m_Name: CrossHairController
+  m_Name: CrossHair_And_Ray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1609,8 +1625,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff5564378dcd4134981057601ab1311b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cType: 0
-  CrossHair: {fileID: 1459197387}
+  crossHair: 0
+  AttackCursor: {fileID: 1459197387}
   CircleCursor: {fileID: 2034000264}
   GrabCursor: {fileID: 1325932813}
   rotateSpeed: 180
@@ -1630,6 +1646,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1975909191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1975909188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984b696efd58d4b4f987b254dbc4c94d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitObject: {fileID: 0}
+  hitPosition: {x: 0, y: 0, z: 0}
+  rayLength: 0
 --- !u!1 &2034000264
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,7 +1792,7 @@ GameObject:
   - component: {fileID: 2117550988}
   - component: {fileID: 2117550987}
   - component: {fileID: 2117550986}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}

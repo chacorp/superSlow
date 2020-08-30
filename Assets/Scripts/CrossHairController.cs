@@ -11,12 +11,14 @@ public class CrossHairController : MonoBehaviour
         circle,
         grab
     }
-    public CursorType cType;
+    public CursorType crossHair;
 
-    public GameObject CrossHair;
+    [Header("CrossHair Sprites")]
+    public GameObject AttackCursor;
     public GameObject CircleCursor;
     public GameObject GrabCursor;
 
+    [Header("Properties")]
     public float rotateSpeed = 180f;
     float moveSpeed;
     public bool Onfire;
@@ -24,64 +26,16 @@ public class CrossHairController : MonoBehaviour
 
     void Start()
     {
-        cType = CursorType.none;
-        CrossHair.SetActive(false);
+        crossHair = CursorType.none;
+        AttackCursor.SetActive(false);
         CircleCursor.SetActive(false);
         GrabCursor.SetActive(false);
     }
-
-    void Update()
-    {
-        moveSpeed = rotateSpeed * TimeController.Instance.GetTimeScale;
-
-        switch (cType)
-        {
-            case CursorType.none:
-                CrossHair.SetActive(false);
-                CircleCursor.SetActive(false);
-                GrabCursor.SetActive(false);
-                break;
-
-            case CursorType.circle:
-                // 무기가 없거나 칼, 몽둥이가 있을때
-                CircleCursor.SetActive(true);
-
-                CrossHair.SetActive(false);
-                GrabCursor.SetActive(false);
-
-                // 한 방 날릴때
-                OnFireCursor();
-                break;
-
-            case CursorType.cross:
-                // 총이 있을때
-                CrossHair.SetActive(true);
-
-                CircleCursor.SetActive(false);
-                GrabCursor.SetActive(false);
-
-                // 한 방 날릴때
-                OnFireCursor();
-                break;
-
-            case CursorType.grab:
-                // 아무 것도 없을때 
-                GrabCursor.SetActive(true);
-
-                CrossHair.SetActive(false);
-                CircleCursor.SetActive(false);
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    void OnFireCursor()
+    void SpinCursor()
     {
         if (Onfire)
         {
-            RectTransform rt = CrossHair.GetComponent<RectTransform>();
+            RectTransform rt = AttackCursor.GetComponent<RectTransform>();
             rt.localEulerAngles += Vector3.forward * moveSpeed * Time.deltaTime;
             if (rt.localEulerAngles.z >= 90)
             {
@@ -90,4 +44,52 @@ public class CrossHairController : MonoBehaviour
             }
         }
     }
+
+    void Update()
+    {
+        moveSpeed = rotateSpeed * TimeController.Instance.GetTimeScale;
+
+        switch (crossHair)
+        {
+            case CursorType.none:
+                AttackCursor.SetActive(false);
+                CircleCursor.SetActive(false);
+                GrabCursor.SetActive(false);
+                break;
+
+            case CursorType.circle:
+                // 무기가 없거나 칼, 몽둥이가 있을때
+                CircleCursor.SetActive(true);
+
+                AttackCursor.SetActive(false);
+                GrabCursor.SetActive(false);
+
+                // 한 방 날릴때
+                SpinCursor();
+                break;
+
+            case CursorType.cross:
+                // 총이 있을때
+                AttackCursor.SetActive(true);
+
+                CircleCursor.SetActive(false);
+                GrabCursor.SetActive(false);
+
+                // 한 방 날릴때
+                SpinCursor();
+                break;
+
+            case CursorType.grab:
+                // 아무 것도 없을때 
+                GrabCursor.SetActive(true);
+
+                AttackCursor.SetActive(false);
+                CircleCursor.SetActive(false);
+                break;
+
+            default:
+                break;
+        }
+    }
+
 }

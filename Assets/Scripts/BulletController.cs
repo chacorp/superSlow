@@ -6,12 +6,15 @@ public class BulletController : MonoBehaviour
 {
     public float speed = 20f;
     float timer;
-    float disableTime = 2f;
-
+    float disableTime = 1.5f;
+    public bool destroy;
     List<GameObject> bulletPool;
+
+    public Material capMat;
 
     private void Start()
     {
+        destroy = false;
         bulletPool = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerFire>().bulletPool;
     }
     
@@ -21,11 +24,20 @@ public class BulletController : MonoBehaviour
         transform.position += transform.forward * moveSpeed * Time.deltaTime;
         timer += Time.deltaTime * TimeController.Instance.GetTimeScale;
 
-        if(timer > disableTime)
+        if(timer > disableTime || destroy)
         {
             timer = 0;
             bulletPool.Add(gameObject);
+            destroy = false;
             gameObject.SetActive(false);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            GameObject[] CutMesh = MeshCut.Cut(other.gameObject, transform.position, transform.right, capMat);
         }
     }
 }
