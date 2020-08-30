@@ -24,14 +24,14 @@ public class FallingBox : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerEnter(Collider other)
     {
         transform.position = startPosition;
 
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        BulletController BC = collision.GetComponent<BulletController>();
+        BulletController BC = other.GetComponent<BulletController>();
         if (BC) BC.destroy = true;
     }
 }
